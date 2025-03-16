@@ -14,12 +14,15 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
+#Cargar sonidos
+crash_sound = pygame.mixer.Sound("audio/crash.mp3")
+
 # Cargar imágenes
-pista_img = pygame.image.load("pista.png")  # Cargar imagen de la pista
+pista_img = pygame.image.load("media/pista.png")  # Cargar imagen de la pista
 pista_img = pygame.transform.scale(pista_img, (WIDTH, HEIGHT * 2))  # Duplicar altura para efecto de desplazamiento
-carrito_img = pygame.image.load("carrito.png")  # Cargar imagen del carrito
+carrito_img = pygame.image.load("media/carrito.png")  # Cargar imagen del carrito
 carrito_img = pygame.transform.scale(carrito_img, (150, 200))  # Ajustar tamaño más grande
-platano_img = pygame.image.load("platano.png")  # Cargar imagen del plátano
+platano_img = pygame.image.load("media/platano.png")  # Cargar imagen del plátano
 platano_img = pygame.transform.scale(platano_img, (80, 160))  # Ajustar tamaño más grande
 
 # Fuente para mensajes
@@ -106,6 +109,7 @@ while running:
             offset_x = obs.x - player_car.x
             offset_y = obs.y - player_car.y
             if carrito_mask.overlap(platano_mask, (offset_x, offset_y)):
+                pygame.mixer.Sound.play(crash_sound)
                 crashed = True
     else:
         # Mostrar mensaje de fin del juego
