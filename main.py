@@ -58,6 +58,26 @@ clock = pygame.time.Clock()
 running = True
 crashed = False
 
+#Funcion para mostrar la pantalla de inicio
+def show_start_screen():
+    screen.fill(BLACK)
+    text1 = font.render("Presiona una tecla", True, WHITE)
+    text2 = font.render("para empezar", True, WHITE)
+    screen.blit(text1, (WIDTH // 2 - text1.get_width() // 2, HEIGHT // 2 - 40))
+    screen.blit(text2, (WIDTH // 2 - text2.get_width() // 2, HEIGHT // 2 + 10))
+    pygame.display.flip()
+
+#Pantalla de inicio antes de comenzar
+show_start_screen()
+waiting = True
+while waiting:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            waiting = False
+            started = True
 # Bucle principal
 while running:
     screen.fill(WHITE)
