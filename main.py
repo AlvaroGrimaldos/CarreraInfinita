@@ -67,6 +67,24 @@ def show_start_screen():
     screen.blit(text2, (WIDTH // 2 - text2.get_width() // 2, HEIGHT // 2 + 10))
     pygame.display.flip()
 
+#Funcion para mostras la pantalla final
+def show_game_over_screen():
+    screen.fill(BLACK)
+    text1 = font.render("Perdiste Crack", True, RED)
+    text2 = font.render("Presiona Enter para reiniciar", True, WHITE)
+    screen.blit(text1, (WIDTH // 2 - text1.get_width() // 2, HEIGHT // 2 - 40))
+    screen.blit(text2, (WIDTH // 2 - text2.get_width() // 2, HEIGHT // 2 + 10))
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                waiting = False
+                return
+
 #Pantalla de inicio antes de comenzar
 show_start_screen()
 waiting = True
@@ -131,10 +149,13 @@ while running:
             if carrito_mask.overlap(platano_mask, (offset_x, offset_y)):
                 pygame.mixer.Sound.play(crash_sound)
                 crashed = True
-    else:
-        # Mostrar mensaje de fin del juego
-        text = font.render("¡Sigue Intentandolo CRACK ;-)!", True, RED)
-        screen.blit(text, (WIDTH // 2 - text.get_width() // 2, HEIGHT // 2 - text.get_height() // 2))
+    elif crashed:
+        show_game_over_screen()
+        crashed = False
+        obstacles.clear()
+        player_car.x = WIDTH // 2 - car_width // 2
+        started = False
+        show_start_screen()
     
     pygame.display.flip()
     clock.tick(30)
